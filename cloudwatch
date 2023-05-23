@@ -1,0 +1,83 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "logs:PutDestinationPolicy",
+                "logs:GetLogEvents",
+                "logs:DeleteDestination",
+                "logs:PutSubscriptionFilter",
+                "logs:TagResource",
+                "logs:PutDestination",
+                "logs:DeleteLogStream",
+                "logs:PutLogEvents",
+                "logs:ListTagsForResource"
+            ],
+            "Resource": [
+                "arn:aws:logs:*:602189185482:destination:*",
+                "arn:aws:logs:*:602189185482:log-group:*:log-stream:*"
+            ]
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": [
+                "logs:ListTagsLogGroup",
+                "logs:GetDataProtectionPolicy",
+                "logs:DeleteDataProtectionPolicy",
+                "logs:DeleteSubscriptionFilter",
+                "logs:DescribeLogStreams",
+                "logs:DescribeSubscriptionFilters",
+                "logs:StartQuery",
+                "logs:DescribeMetricFilters",
+                "logs:CreateExportTask",
+                "logs:CreateLogStream",
+                "logs:DeleteMetricFilter",
+                "logs:TagLogGroup",
+                "logs:DeleteRetentionPolicy",
+                "logs:AssociateKmsKey",
+                "logs:FilterLogEvents",
+                "logs:DisassociateKmsKey",
+                "logs:PutDataProtectionPolicy",
+                "logs:DescribeLogGroups",
+                "logs:DeleteLogGroup",
+                "logs:Unmask",
+                "logs:TagResource",
+                "logs:CreateLogGroup",
+                "logs:ListTagsForResource",
+                "logs:PutMetricFilter",
+                "logs:PutSubscriptionFilter",
+                "logs:PutRetentionPolicy",
+                "logs:GetLogGroupFields"
+            ],
+            "Resource": "arn:aws:logs:*:602189185482:log-group:*"
+        },
+        {
+            "Sid": "VisualEditor2",
+            "Effect": "Allow",
+            "Action": [
+                "logs:DescribeQueries",
+                "logs:GetLogRecord",
+                "logs:StopQuery",
+                "logs:TestMetricFilter",
+                "logs:DeleteQueryDefinition",
+                "logs:PutQueryDefinition",
+                "logs:GetLogDelivery",
+                "logs:ListLogDeliveries",
+                "logs:Link",
+                "logs:CreateLogDelivery",
+                "logs:DescribeExportTasks",
+                "logs:GetQueryResults",
+                "logs:UpdateLogDelivery",
+                "logs:CancelExportTask",
+                "logs:DeleteLogDelivery",
+                "logs:DescribeQueryDefinitions",
+                "logs:DescribeResourcePolicies",
+                "logs:DescribeDestinations"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
