@@ -1,0 +1,29 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "rum:PutRumMetricsDestination",
+                "rum:BatchGetRumMetricDefinitions",
+                "rum:UpdateAppMonitor",
+                "rum:ListAppMonitors",
+                "rum:UntagResource",
+                "rum:CreateAppMonitor",
+                "rum:DeleteAppMonitor",
+                "rum:GetAppMonitorData",
+                "rum:ListTagsForResource",
+                "rum:PutRumEvents",
+                "rum:TagResource",
+                "rum:DeleteRumMetricsDestination",
+                "rum:GetAppMonitor",
+                "rum:BatchDeleteRumMetricDefinitions",
+                "rum:ListRumMetricsDestinations",
+                "rum:UpdateRumMetricDefinition",
+                "rum:BatchCreateRumMetricDefinitions"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
