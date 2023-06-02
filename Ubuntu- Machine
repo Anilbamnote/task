@@ -1,0 +1,19 @@
+create instance by selecting ubuntu image
+select instance type
+select key pair
+select networking...firwall
+launch instance
+after launch instance go to CONNECT
+ubuntu machin will open 
+take ssh
+first configure aws
+put access key and secrate key
+put cammand ..like....
+aws s3 ls...if bucket is present on s3 ....it will show as output
+make file by vim and add data in it
+store in /var/www/html/index.html
+curl localhost
+or
+go instance copy public ip and put into new instance
+the out-put will shown on screen.
+
