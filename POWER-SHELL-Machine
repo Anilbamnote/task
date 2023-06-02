@@ -1,0 +1,10 @@
+go to windows search bar ...type powershell 
+first configure aws 
+put access key and secrate key
+run cammand like 
+aws s3 ls
+result.....bucket will be shown
+
+
+
+
