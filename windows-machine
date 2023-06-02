@@ -1,0 +1,18 @@
+launch instance
+select windows machine
+choose instance type..t2micro
+configure instance ..like..auto-assinging public ip ..Enable
+add storage
+add security group...RDP..tcp..3389..custome..0.0.0.0/0
+select key pairs
+launch instance
+
+after that go to inatance..CONNECT..RDP clint
+get password...usesrname...
+go to mobaextrem....
+take RDP..put all credentials..P-ip..(open ec2 in new tab)
+after that  windows terminal will open...it requare passward..(copy from ec2 instance in new tab
+put cammands cd downloads
+ssh -i <rsa key>...show the linux image
+
+
