@@ -1,0 +1,13 @@
+create instance first with seslect image of linux,
+select instance type ,
+select key pair , 
+selesct firewall 
+selsect advance setting
+put user data
+launch instance
+go to mobaextrem
+configure aws
+aws s3 ls......bucket show
+curl localhost.......script data show
+go to instance , copy public ip
+put p.ip in new tab......show the page of hhtpd
