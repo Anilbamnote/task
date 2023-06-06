@@ -1,0 +1,32 @@
+launch instance1, grnrate kye pairs....launch instance
+launch instance2, grnrate kye pairs....launch instance
+take ssh on mobaetrem of both instances with use its own keys.
+now delete key pairs of 1st instance
+then tray to take ssh ..it doe'nt work to take ssh
+now go to the console stop instance-1 and go to EBS section
+click on volume and select the instance-1 volume..
+click on action & click on detached volume
+select on instance-2..action...stop..instance
+go volume select instance-1 ..action...attach volume
+select instance-2
+start instance-2
+click on instace-2(new instance)...ssh..& open in mobaextrem
+take ssh
+login as root user
+check partision..lsblk
+check file type...lsblk-fp
+mount partion...mount -o rw,nouuid /dev/xvdf1 /mnt
+ls /mnt
+cat  /home/centos/.ssh/authorized_keys >> /mnt/home/centos/.ssh/authorized_keys 
+umount /mnt
+then go console select instance-2 & stop it first
+then go to volume section 
+select the instance-1 (old instance)
+attached it to its orignal instance (instance-1)....but change the device name /dev/sd1 or what ever ti shown in box
+start old instance
+choose public ip and go to mobaextrem 
+take ssh using new key pair of instance -2
+sudo -i
+ls
+it works
+
