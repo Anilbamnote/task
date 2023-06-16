@@ -1,0 +1,35 @@
+MOUNT S3 BUCKET ON EC2 INSTANCE BY USEING IAM ROLE (TASK)
+
+
+launch instance first...for...linux image 
+make bucket first if already have it ,then do'nt do it
+create IAM Role and attach to ec2 istance..click on instance..action...security...assing iam role
+take ssh on Mobaxtrem
+yum update -y
+install s3fs packege first..use..follwing cammand :-
+sudo yum install automake fuse fuse-devel gcc-c++ git libcurl-devel libxml2-devel make openssl-devel
+git clone https://github.com/s3fs-fuse/s3fs-fuse.git...if error is generated..use...yum install git -y
+ls ...shoe s3fs-fuse
+cd s3fs-fuse
+./autogen.sh
+./configure --prefix=/usr --with-openssl
+make
+sudo make install
+ls
+s3fs...show buket if mounts ...s3efs 
+which s3fs...show path of s2fs
+df -h....show ..s3fs mount or not...not mount
+s3fs -o iam_role="s3mount-0n-ec2" first-buket1 /mnt....where..(s3fs -o iam_role="role name" bucket name /mount directory)
+cd /mnt
+make file on it...and it will shown in your s3 bucket...shown on s3 console...in buket
+
+OUTPUT
+[root@ip-172-31-36-2 s3fs-fuse]# cd /mnt
+[root@ip-172-31-36-2 mnt]# ls
+2014_lamborghini_gallardo-pic-4348275742611048319-640x480.jpeg
+[root@ip-172-31-36-2 mnt]# touch file{1..4}
+[root@ip-172-31-36-2 mnt]# ls
+2014_lamborghini_gallardo-pic-4348275742611048319-640x480.jpeg  file1  file2  file3  file4
+ok..done
+
+
