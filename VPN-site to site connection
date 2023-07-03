@@ -34,22 +34,7 @@ Now open ..  /etc/ipsec.conf and look for the line below. Ensure that the # in f
 now on terminel...vim /etc/ipsec.d/aws.conf...copy the below lines from file
 conn Tunnel1
 	authby=secret
-	auto=start
-	left=%defaultroute
-	leftid=43.205.129.53
-	right=3.108.181.93
-	type=tunnel
-	ikelifetime=8h
-	keylife=1h
-	phase2alg=aes128-sha1;modp1024
-	ike=aes128-sha1;modp1024
-	auth=esp
-	keyingtries=%forever
-	keyexchange=ike
-	leftsubnet=<LOCAL NETWORK>
-	rightsubnet=<REMOTE NETWORK>
-	dpddelay=10
-	dpdtimeout=30
+	to........
 	dpdaction=restart_by_peer
 NOTE 
 first delete this line...	auth=esp..and put left subnet..(aws-side-vpc-ip)  and right subnet..(client-side-vpc-ip)
@@ -63,6 +48,13 @@ SUDO SYSTEMCTL RESTSRT NETWORK
 ssh -i key-name ec2-user@<private ip of client-side-instance>...it doesnt works
 Go to vpc console
 go to RoutTable..select client vpc...rout-propogation...Enable
+go to site 2 site vpn --connection..click on..vpc-connection..tunnel detail....status..> UP
+Now go terminal...
+ssh -i key-name ec2-user@<private ip of client-side-instance>...
+ping  <private ip of client-side-instance> ......it  works
+
+
+Practical demo
 Installed:
   libreswan.x86_64 0:3.25-4.8.amzn2.0.1
 
@@ -103,10 +95,6 @@ PING 10.2.14.115 (10.2.14.115) 56(84) bytes of data.
 --- 10.2.14.115 ping statistics ---
 2 packets transmitted, 2 received, 0% packet loss, time 1030ms
 rtt min/avg/max/mdev = 0.018/0.024/0.031/0.008 ms
-[ec2-user@ip-10-2-14-115 ~]$
-
-
-NOW GO TO site to site cannectio...select.vpc cnnection..tunnel detail...up
-go to terminal...
-ssh -i key-name ec2-user@<private ip of client-side-instance>...it works
+[ec2-user@ip-10-2-14-155]$
+.........*.....*......*..........end
 
