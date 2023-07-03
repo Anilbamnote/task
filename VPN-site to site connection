@@ -63,6 +63,49 @@ SUDO SYSTEMCTL RESTSRT NETWORK
 ssh -i key-name ec2-user@<private ip of client-side-instance>...it doesnt works
 Go to vpc console
 go to RoutTable..select client vpc...rout-propogation...Enable
+Installed:
+  libreswan.x86_64 0:3.25-4.8.amzn2.0.1
+
+Dependency Installed:
+  ldns.x86_64 0:1.6.16-10.amzn2.0.3                               unbound-libs.x86_64 0:1.7.3-15.amzn2.0.4
+
+Complete!
+[ec2-user@ip-10-1-15-115 ~]$ sudo vim /etc/sysctl.conf
+[ec2-user@ip-10-1-15-115 ~]$ sudo sysctl -p
+net.ipv4.ip_forward = 1
+net.ipv4.conf.default.rp_filter = 0
+net.ipv4.conf.default.accept_source_route = 0
+[ec2-user@ip-10-1-15-115 ~]$ sudo systemctl restart network
+[ec2-user@ip-10-1-15-115 ~]$ sudo vim /etc/ipsec.conf
+[ec2-user@ip-10-1-15-115 ~]$ sudo vim /etc/ipsec.d/aws.conf
+[ec2-user@ip-10-1-15-115 ~]$ sudo vim /etc/ipsec.d/aws.secrets
+[ec2-user@ip-10-1-15-115 ~]$ sudo systemctl restart ipsec.service
+[ec2-user@ip-10-1-15-115 ~]$ sudo systemctl restart network
+[ec2-user@ip-10-1-15-115 ~]$ ssh -i ./second-key.pem ec2-user@10.2.14.115
+^C
+[ec2-user@ip-10-1-15-115 ~]$ ssh -i ./second-key.pem ec2-user@10.2.14.115
+The authenticity of host '10.2.14.115 (10.2.14.115)' can't be established.
+ECDSA key fingerprint is SHA256:ZW8vPGB/n/P34uSeLZf8SAKPXBWE5Vy/5uPCsdisUBo.
+ECDSA key fingerprint is MD5:f1:47:b4:bb:eb:ea:fe:c8:92:00:eb:5c:10:7b:75:70.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '10.2.14.115' (ECDSA) to the list of known hosts.
+
+       __|  __|_  )
+       _|  (     /   Amazon Linux 2 AMI
+      ___|\___|___|
+
+https://aws.amazon.com/amazon-linux-2/
+[ec2-user@ip-10-2-14-115 ~]$ ping 10.2.14.115
+PING 10.2.14.115 (10.2.14.115) 56(84) bytes of data.
+64 bytes from 10.2.14.115: icmp_seq=1 ttl=255 time=0.018 ms
+64 bytes from 10.2.14.115: icmp_seq=2 ttl=255 time=0.031 ms
+^C
+--- 10.2.14.115 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1030ms
+rtt min/avg/max/mdev = 0.018/0.024/0.031/0.008 ms
+[ec2-user@ip-10-2-14-115 ~]$
+
+
 NOW GO TO site to site cannectio...select.vpc cnnection..tunnel detail...up
 go to terminal...
 ssh -i key-name ec2-user@<private ip of client-side-instance>...it works
