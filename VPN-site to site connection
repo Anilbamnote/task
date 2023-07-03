@@ -1,0 +1,69 @@
+create tow vpc first..
+a)1st -> aws-side-vpc..create subnet01..enable auto assign ip....create..igw...entry in rout table
+b) 2nd -> client-side-vpc..create subnet02...private
+launch instance
+a) aws-side-instance1..select vpc..1st..subnet..01..sg..ssh and all ICMPipv4..custom..0.0.0.0/0
+b) aws-client-side...select vpc.2nd..subnet..02..sg..ssh and all ICMPipv4..custom..0.0.0.0/0
+take ssh ....of aws-side-instance..public..ip..and pr..key
+https://aws.amazon.com/amazon-linux-2/
+[ec2-user@ip-10-1-15-115 ~]$ sudo ls
+[ec2-user@ip-10-1-15-115 ~]$ ls
+second-key.pem
+[ec2-user@ip-10-1-15-115 ~]$ sudo chmod 600 ./second-key.pem
+[ec2-user@ip-10-1-15-115 ~]$ ls -ltr
+total 4
+-rw------- 1 ec2-user ec2-user 1674 Jul  3 06:58 second-key.pem
+[ec2-user@ip-10-1-15-115 ~]$ ssh -i ./second-key.pem ec2-user@10.2.14.115......permission denay..for ssh
+
+install openswan package...
+sudo yum install openswan -y.......package install
+go to vpc console
+create coustomer getway..put..public..ip..<--- aws-side-instance
+create Virtual private gateways...and Attach it to vpc..(client-side-vpc)
+Now create site to site cnnection...select... coustomer getway ..and..Virtual private gateways...select static ip..of client-vpc
+now donload the configuration file..open it..copy..1st 3 line..from..
+.but first open./etc/sysctl.conf  .....file on terminal..and copy below 3 lines in it..wq!
+1) Open /etc/sysctl.conf and ensure that its values match the following:
+   net.ipv4.ip_forward = 1
+   net.ipv4.conf.default.rp_filter = 0
+   net.ipv4.conf.default.accept_source_route = 0
+SUDO SYSTEMCTL -P
+SYSTEMCTL RESTART NETWORK
+Now open ..  /etc/ipsec.conf and look for the line below. Ensure that the # in front of the line has been removed, then save and exit the file.
+    #include /etc/ipsec.d/*.conf.....wq!..and enter to exit from that file
+now on terminel...vim /etc/ipsec.d/aws.conf...copy the below lines from file
+conn Tunnel1
+	authby=secret
+	auto=start
+	left=%defaultroute
+	leftid=43.205.129.53
+	right=3.108.181.93
+	type=tunnel
+	ikelifetime=8h
+	keylife=1h
+	phase2alg=aes128-sha1;modp1024
+	ike=aes128-sha1;modp1024
+	auth=esp
+	keyingtries=%forever
+	keyexchange=ike
+	leftsubnet=<LOCAL NETWORK>
+	rightsubnet=<REMOTE NETWORK>
+	dpddelay=10
+	dpdtimeout=30
+	dpdaction=restart_by_peer
+NOTE 
+first delete this line...	auth=esp..and put left subnet..(aws-side-vpc-ip)  and right subnet..(client-side-vpc-ip)
+wq!...and enter
+ Create a new file at
+/etc/ipsec.d/aws.secrets ...and pest below line ..which is mention in file
+43.205.129.53 3.108.181.93: PSK "mZBffe0fDOtsqb_veRgy6S.798VEJNXf"
+wq!...enter
+SUDO SYSTEMCTL RESTSRT IPSEC.SERVICE
+SUDO SYSTEMCTL RESTSRT NETWORK
+ssh -i key-name ec2-user@<private ip of client-side-instance>...it doesnt works
+Go to vpc console
+go to RoutTable..select client vpc...rout-propogation...Enable
+NOW GO TO site to site cannectio...select.vpc cnnection..tunnel detail...up
+go to terminal...
+ssh -i key-name ec2-user@<private ip of client-side-instance>...it works
+
