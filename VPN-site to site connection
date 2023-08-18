@@ -20,7 +20,8 @@ sudo yum install openswan -y.......package install
 go to vpc console
 create coustomer getway..put..public..ip..<--- aws-side-instance
 create Virtual private gateways...and Attach it to vpc..(client-side-vpc)
-Now create site to site cnnection...select... coustomer getway ..and..Virtual private gateways...select static ip..of client-vpc
+Now create site to site cnnection...select... coustomer getway ..and..Virtual private gateways...select static ip...poxy..
+.of client-vpc-10.2.0.0/16
 now donload the configuration file..open it..copy..1st 3 line..from..
 .but first open./etc/sysctl.conf  .....file on terminal..and copy below 3 lines in it..wq!
 1) Open /etc/sysctl.conf and ensure that its values match the following:
