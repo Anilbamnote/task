@@ -1,9 +1,9 @@
 create tow vpc first..
-a)1st -> aws-side-vpc..create subnet01..enable auto assign ip....create..igw...entry in rout table
-b) 2nd -> client-side-vpc..create subnet02...private
+a)1st -> aws-side-vpc.10.1.0.0/16...create subnet01..enable auto assign ip....create..igw...entry in rout table
+b) 2nd -> client-side-vpc.10.2.0.0/16.create subnet02...private
 launch instance
-a) aws-side-instance1..select vpc..1st..subnet..01..sg..ssh and all ICMPipv4..custom..0.0.0.0/0
-b) aws-client-side...select vpc.2nd..subnet..02..sg..ssh and all ICMPipv4..custom..0.0.0.0/0
+a) aws-side-instance1. select linux-2..image.select vpc..1st..subnet.10.1.1.0/24...sg..ssh and all ICMPipv4..custom..0.0.0.0/0
+b) aws-client-side...select vpc.2nd..subnet..02.10.2.2.0/24.sg..ssh and all ICMPipv4..custom..0.0.0.0/0
 take ssh ....of aws-side-instance..public..ip..and pr..key
 https://aws.amazon.com/amazon-linux-2/
 [ec2-user@ip-10-1-15-115 ~]$ sudo ls
@@ -21,8 +21,8 @@ go to vpc console
 create coustomer getway..put..public..ip..<--- aws-side-instance
 create Virtual private gateways...and Attach it to vpc..(client-side-vpc)
 Now create site to site cnnection...select... coustomer getway ..and..Virtual private gateways...select static ip...poxy..
-.of client-vpc-10.2.0.0/16
-now donload the configuration file..open it..copy..1st 3 line..from..
+.of aws-vpc-10.2.0.0/16
+now download the configuration file..open it..copy..1st 3 line..from..
 .but first open./etc/sysctl.conf  .....file on terminal..and copy below 3 lines in it..wq!
 1) Open /etc/sysctl.conf and ensure that its values match the following:
    net.ipv4.ip_forward = 1
@@ -38,11 +38,12 @@ conn Tunnel1
 	to........
 	dpdaction=restart_by_peer
 NOTE 
-first delete this line...	auth=esp..and put left subnet..(aws-side-vpc-ip)  and right subnet..(client-side-vpc-ip)
+first delete this line...	auth=esp..
+and put left subnet..(aws-side-vpc-ip 10.1.0.0/16)  and right subnet..(client-side-vpc-ip 10.2.0.0/16)
 wq!...and enter
  Create a new file at
 /etc/ipsec.d/aws.secrets ...and pest below line ..which is mention in file
-43.205.129.53 3.108.181.93: PSK "mZBffe0fDOtsqb_veRgy6S.798VEJNXf"
+(43.205.129.53 3.108.181.93: PSK "mZBffe0fDOtsqb_veRgy6S.798VEJNXf")
 wq!...enter
 SUDO SYSTEMCTL RESTSRT IPSEC.SERVICE
 SUDO SYSTEMCTL RESTSRT NETWORK
