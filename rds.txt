@@ -1,0 +1,90 @@
+   
+                   *Rds*
+sudo -i
+yum install java -y
+yum install httpd -y
+wget tomcat 9
+ls 
+so file will be in tar 
+tar -xvf apache-tomcat-9.0.78.tar.gz
+ls
+cd apache-tomcat-9.0.78/
+wget https://s3-us-west-2.amazonaws.com/studentapi-cit/student.war
+wget https://s3-us-west-2.amazonaws.com/studentapi-cit/mysql-connector.jar
+ls "we can see now a jar and student file"
+mv student.war webapps/
+mv mysql-connector.jar lib/
+cd bin/
+ls
+./catalina.sh start
+
+add port in instance 8080..cutom.0.0.0.0/0
+add port MYSQL/aurora..anywhere..0.0.0.0/0..........................note
+
+cd apache-tomcat-9.0.78
+vim conf/context.xml
+
+put below data in above file...by making some modification..like..1-username..2-passward..3-database endpoint..4-database name(studdentapp)
+
+<Resource name="jdbc/TestDB" auth="Container" type="javax.sql.DataSource"
+           maxTotal="500" maxIdle="30" maxWaitMillis="1000"
+           username="admin" password="admin1234" driverClassName="com.mysql.jdbc.Driver"
+           url="jdbc:mysql://database-1.cz4bw22ugxkp.ap-northeast-1.rds.amazonaws.com:3306/studentapp"/> 
+
+yum install mysql -y
+mysql -u admin -h database-1.cwoe896f0a0z.us-east -p
+password-admin123
+2.rds.amazonaws.com -p "but for that you have to enable mysql auro firewall anywhere" same as insatance and table
+Enter password:
+maria db ======>
+show databeses;
+create databases;
+use studentapp;
+create database studentapp;
+
+put below schema in above studentapp..
+
+CREATE TABLE if not exists students(student_id INT NOT NULL AUTO_INCREMENT,
+    student_name VARCHAR(100) NOT NULL,
+    student_addr VARCHAR(100) NOT NULL,
+    student_age VARCHAR(3) NOT NULL,
+    student_qual VARCHAR(20) NOT NULL,
+    student_percent VARCHAR(10) NOT NULL,
+    student_year_passed VARCHAR(10) NOT NULL,
+    PRIMARY KEY (student_id)
+);
+describe students;
+exit 
+
+cntrl c
+cd bin
+./catalina.sh stop
+./catalina.sh start
+cd ..
+
+if we want to add another data on table go table on crom click on register student add data save..and goto moba select * from students;--------so we can see the new user entry
+------------------------------------------------------------------------------------------------------------------
+
+Create LAMP server (Apache)
+launch an ec2 instance select ami image 2 and allow http anywhere 
+now take a ssh i use mobaxtream
+now use following commands
+yum update -y
+yum install httpd 
+yum install mariadb mariadb-server
+yum install php php-mysql
+systemctl start mariadb 
+systemctl enable mariadb
+mysql_secure_installation
+give password and y y y y 
+systemctl start httpd 
+systemctl enable httpd
+cd /var/www/html
+vim /index.php 
+<?php
+phpinfo();
+?>
+wq!
+now hit the public ip page will be located.
+
+-----------------------------------------------------------------------------------------------------------------------
