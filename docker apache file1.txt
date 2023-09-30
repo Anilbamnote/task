@@ -1,0 +1,39 @@
+FROM centos:7
+RUN yum install java-openjdk -y
+# RUN curl -O https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.78/bin/apache-tomcat-9.0.78.tar.gz
+ADD https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.80/bin/apache-tomcat-9.0.80.tar.gz .
+RUN tar -xvf apache-tomcat-9.0.80.tar.gz -C /opt/
+WORKDIR /opt/
+# RUN rm -rf apache-tomcat-9.0.78.tar.gz
+RUN mv apache-tomcat-9.0.80* /opt/tomcat
+WORKDIR /opt/tomcat/webapps/
+COPY . . student.war/  /opt/tomcat/webapps
+EXPOSE 8080/tcp
+CMD [ "/opt/tomcat/bin/catalina.sh", "run"]
+ENTRYPOINT [ "bash" ]
+
+
+**********************************************************************
+******************************************************************
+
+
+MULTISTAGE DOCKERFILE
+
+FROM ubuntu:latest As build
+RUN apt update && apt install git curl maven -y
+RUN git clone https://github.com/sheikhnavezz/student-ui.git
+WORKDIR /student-ui
+RUN mvn clean package
+
+
+
+
+FROM alpine
+RUN apk add openjdk8
+ADD https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.80/bin/apache-tomcat-9.0.80.tar.gz . 
+RUN tar -xvf apache-tomcat-9.0.80.tar.gz -C /opt/
+COPY --from=build /student-ui/target/**.war /opt/apache-tomcat-9.0.80/webapps/student.war
+RUN rm -rf tomcat.tar.gz
+EXPOSE 8080
+CMD ["/opt/apache-tomcat-9.0.80/bin/catalina.sh","run"]
+
